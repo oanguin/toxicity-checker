@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v3
-      - name: run test
+      - name: install flutter
         uses: subosito/flutter-action@v2
-      - run: flutter test
+      - name: run tests
+        run: flutter test -r expanded
