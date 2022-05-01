@@ -14,21 +14,37 @@ class ToxicityChecker extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const ToxictyMainPage(title: 'Toxicity Checker'),
+      home: const ToxicityMainPage(title: 'Toxicity Checker'),
     );
   }
 }
 
-class ToxictyMainPage extends StatefulWidget {
-  const ToxictyMainPage({Key? key, required this.title}) : super(key: key);
+class ToxicityMainPage extends StatefulWidget {
+  const ToxicityMainPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<ToxictyMainPage> createState() => _ToxictyMainPageState();
+  State<ToxicityMainPage> createState() => _ToxicityMainPageState();
 }
 
-class _ToxictyMainPageState extends State<ToxictyMainPage> {
+class _ToxicityMainPageState extends State<ToxicityMainPage> {
+  late TextEditingController _txtBarCodeEditingController;
+  late String _barCode;
+
+  @override
+  void initState() {
+    super.initState();
+    _txtBarCodeEditingController = TextEditingController();
+    _barCode = '';
+  }
+
+  @override
+  void dispose() {
+    _txtBarCodeEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +52,17 @@ class _ToxictyMainPageState extends State<ToxictyMainPage> {
       body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[Text(widget.title)])),
+              children: <Widget>[
+            TextField(
+              key: const Key("_txtBarCode"),
+              controller: _txtBarCodeEditingController,
+              onSubmitted: (String value) {
+                _barCode = value;
+                setState(() {});
+              },
+            ),
+            Text(_barCode),
+          ])),
     );
   }
 }
