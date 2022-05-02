@@ -12,8 +12,12 @@ class ToxicityChecker extends StatelessWidget {
     return MaterialApp(
       title: 'Toxicity Checker',
       theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+          primaryColor: const Color(0xFFF5F5F5),
+          primarySwatch: Colors.lightGreen,
+          backgroundColor: const Color(0xFFF5F5F5),
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xFFF5F5F5),
+              foregroundColor: Color(0xFF375501))),
       home: const ToxicityMainPage(title: 'Toxicity Checker'),
     );
   }
