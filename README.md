@@ -2,6 +2,8 @@
 
 A new Flutter project used for checking the toxicity of various products.
 
+## Local Development
+* Run release version of application locally `flutter run --release`
 ## Flutter Documentation
 
 [online documentation](https://flutter.dev/docs), which offers tutorials,
