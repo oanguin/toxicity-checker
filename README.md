@@ -1,3 +1,4 @@
+TESTTING Branch Commit Rules
 # toxicity_checker
 
 A new Flutter project used for checking the toxicity of various products.
