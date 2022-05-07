@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toxicity_checker/open_food_client.dart';
 import 'package:toxicity_checker/product_ui.dart';
+import 'package:toxicity_checker/scanner_ui.dart';
 
 void main() {
   runApp(ToxicityChecker(
@@ -52,6 +53,7 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
   late TextEditingController _txtBarCodeEditingController;
   late String _barCode;
   late ProductUI _productUI;
+  late ScannerUI _scannerUI;
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
     _txtBarCodeEditingController = TextEditingController();
     _barCode = '';
     _productUI = ProductUI(openFoodClient: widget.openFoodClient);
+    _scannerUI = ScannerUI();
   }
 
   @override
@@ -83,6 +86,7 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
                 setState(() {});
               },
             ),
+            _scannerUI.showBarCodeScanner(),
             _productUI.showProduct(_barCode),
           ])),
     );
