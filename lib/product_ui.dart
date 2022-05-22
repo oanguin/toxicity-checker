@@ -24,34 +24,37 @@ class ProductUI {
 
       return result;
     } catch (exception) {
-      print("Error retrieving the product : ${exception}");
       return null;
     } finally {
       _searching = false;
     }
   }
 
-  Widget showProduct(barCode) {
+  Widget showProduct(barCode, BuildContext context) {
     return FutureBuilder(
         future: displayProduct(barCode),
         builder:
             (BuildContext context, AsyncSnapshot<ProductResult?> snapshot) {
           if (snapshot.hasData) {
-            return showProductCard(snapshot.data?.product);
+            return showProductCard(snapshot.data?.product, context);
           } else if (_searching) {
             return const CircularProgressIndicator();
           } else {
-            return const Text('Please Enter a Barcode to start the search...');
+            return const SizedBox.shrink();
           }
         });
   }
 
-  Widget showProductCard(Product? product) {
+  Widget showProductCard(Product? product, BuildContext context) {
     if (product == null) {
-      return const Text('Sorry product not found...');
+      return const Text('Sorry product not found...🤕');
     }
 
     return Center(
+        child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 50),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.65,
         child: Card(
             key: const Key("product-card"),
             child: Column(children: <Widget>[
@@ -63,20 +66,22 @@ class ProductUI {
                 children: [
                   showPicture(product.imageFrontSmallUrl ?? ''),
                   Flexible(
-                      child: Text('INGEDIENTS: ${product.ingredientsText}'))
+                      child: Text('INGREDIENTS: ${product.ingredientsText}'))
                 ],
               )
-            ])));
+            ])),
+      ),
+    ));
   }
 
   Widget showPicture(String url) {
     if (url.isEmpty) {
-      return Text('Sorry No Image');
+      return const Text('Sorry No Image');
     } else {
       try {
         return Image(image: NetworkImage(url));
       } catch (exception) {
-        return Text('Sorry No Image');
+        return const Text('Sorry No Image');
       }
     }
   }
