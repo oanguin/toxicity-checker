@@ -15,6 +15,10 @@ samples, guidance on mobile development, and a full API reference.
 * [Mockito](https://pub.dev/packages/mockito)
 * [Open Food Facts - Dart Plugin](https://github.com/openfoodfacts/openfoodfacts-dart/blob/master/DOCUMENTATION.md)
 
+## Local Development Issues
+* You may have an issue when you run locally. If you see an error related to `Iproxy` you need to open the `sdk/bin/cache/artifacts/usbmuxd/iproxy`
+file with right click on Mac OSX and allow it permissions.
+
 ## Color Scheme
 * [Reference](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
 ### Application Colors
