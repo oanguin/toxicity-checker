@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toxicity_checker/open_food_client.dart';
 import 'package:toxicity_checker/product_ui.dart';
-import 'package:toxicity_checker/scanner_ui.dart';
 
 void main() {
   runApp(ToxicityChecker(
@@ -50,18 +50,16 @@ class ToxicityMainPage extends StatefulWidget {
 }
 
 class _ToxicityMainPageState extends State<ToxicityMainPage> {
-  late TextEditingController _txtBarCodeEditingController;
+  final _txtBarCodeEditingController = TextEditingController();
   late String _barCode;
   late ProductUI _productUI;
-  late ScannerUI _scannerUI;
+  late bool showScanner = false;
 
   @override
   void initState() {
     super.initState();
-    _txtBarCodeEditingController = TextEditingController();
     _barCode = '';
     _productUI = ProductUI(openFoodClient: widget.openFoodClient);
-    _scannerUI = ScannerUI();
   }
 
   @override
@@ -70,25 +68,63 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
     super.dispose();
   }
 
+  getBarCode() async {
+    String barcode = await FlutterBarcodeScanner.scanBarcode(
+        "FF69FF00", "Cancel", false, ScanMode.BARCODE);
+
+    setState(() {
+      _barCode = barcode;
+      _txtBarCodeEditingController.text = _barCode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-            TextField(
-              key: const Key("_txtBarCode"),
-              controller: _txtBarCodeEditingController,
-              onSubmitted: (String value) async {
-                _barCode = value;
-                setState(() {});
-              },
-            ),
-            _scannerUI.showBarCodeScanner(),
-            _productUI.showProduct(_barCode),
-          ])),
+      body: Container(
+        margin: const EdgeInsets.only(left: 15, right: 15),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 100),
+            child: Center(
+                child: Column(children: <Widget>[
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: TextField(
+                  autofocus: true,
+                  key: const Key("_txtBarCode"),
+                  controller: _txtBarCodeEditingController,
+                  decoration: const InputDecoration(
+                      icon: Icon(Icons.search),
+                      hintText:
+                          'Please enter a barcode to begin your search...',
+                      border: OutlineInputBorder()),
+                  onSubmitted: (String value) async {
+                    setState(() {
+                      _barCode = value;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        getBarCode();
+                      },
+                      child: const Text('Scan Barcode')),
+                ),
+              ),
+              _productUI.showProduct(_barCode, context),
+            ])),
+          ),
+        ),
+      ),
     );
   }
 }
