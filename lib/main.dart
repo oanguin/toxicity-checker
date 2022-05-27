@@ -78,6 +78,13 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
     });
   }
 
+  reset() {
+    setState(() {
+      _barCode = "";
+      _txtBarCodeEditingController.text = _barCode;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,23 +96,36 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
             padding: const EdgeInsets.symmetric(vertical: 100),
             child: Center(
                 child: Column(children: <Widget>[
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 2,
-                child: TextField(
-                  autofocus: true,
-                  key: const Key("_txtBarCode"),
-                  controller: _txtBarCodeEditingController,
-                  decoration: const InputDecoration(
-                      icon: Icon(Icons.search),
-                      hintText:
-                          'Please enter a barcode to begin your search...',
-                      border: OutlineInputBorder()),
-                  onSubmitted: (String value) async {
-                    setState(() {
-                      _barCode = value;
-                    });
-                  },
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextField(
+                      autofocus: true,
+                      key: const Key("_txtBarCode"),
+                      controller: _txtBarCodeEditingController,
+                      decoration: const InputDecoration(
+                          icon: Icon(Icons.search),
+                          hintText:
+                              'Please enter a barcode to begin your search...',
+                          border: OutlineInputBorder()),
+                      onSubmitted: (String value) async {
+                        setState(() {
+                          _barCode = value;
+                        });
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: IconButton(
+                        key: const Key("clearIcon"),
+                        onPressed: () => {reset()},
+                        tooltip: "Reset product search",
+                        icon: const Icon(Icons.sync_outlined)),
+                  )
+                ],
               ),
               Container(
                 padding:

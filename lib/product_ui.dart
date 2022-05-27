@@ -30,12 +30,12 @@ class ProductUI {
     }
   }
 
-  Widget showProduct(barCode, BuildContext context) {
+  Widget showProduct(String barCode, BuildContext context) {
     return FutureBuilder(
         future: displayProduct(barCode),
         builder:
             (BuildContext context, AsyncSnapshot<ProductResult?> snapshot) {
-          if (snapshot.hasData) {
+          if (barCode.isNotEmpty && snapshot.hasData) {
             return showProductCard(snapshot.data?.product, context);
           } else if (_searching) {
             return const CircularProgressIndicator();

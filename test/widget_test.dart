@@ -75,4 +75,34 @@ void main() {
     expect(find.text('test-product'), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key("product-card")));
   });
+
+  testWidgets(
+      'TEST: When product card is visible and clear icon is selected the page'
+      ' should not have information displayed', (WidgetTester tester) async {
+    //Mocks
+    final openFoodClient = MockOpenFoodClient();
+    when(openFoodClient.getProduct("test-product")).thenAnswer((_) async =>
+        ProductResult(
+            status: 1,
+            product: Product(
+                productName: "test-product name",
+                ingredientsText: "some ingredients",
+                imageFrontSmallUrl: "")));
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(ToxicityChecker(openFoodClient: openFoodClient));
+
+    // I should be able to enter text into text field with key `_txtBarCode`
+    await tester.enterText(
+        find.byKey(const Key("_txtBarCode")), 'test-product');
+
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pump();
+    await tester.pumpAndSettle();
+
+    // Press clear icon
+    await tester.tap(find.byKey(const Key("clearIcon")));
+
+    expect(find.text('test-product'), findsNothing);
+  });
 }
