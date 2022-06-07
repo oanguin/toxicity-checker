@@ -11,6 +11,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ### Flutter Dependencies
 * [Google Fonts](https://pub.dev/packages/google_fonts)
+* [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
 * [Material UI](https://docs.flutter.dev/development/ui/widgets/material)
 * [Mockito](https://pub.dev/packages/mockito)
 * [Open Food Facts - Dart Plugin](https://github.com/openfoodfacts/openfoodfacts-dart/blob/master/DOCUMENTATION.md)
@@ -55,3 +56,4 @@ the opacity can be changed in the following manner.
 <li>5% — 0D</li>
 <li>0% — 00</li>
 </ul>
+
