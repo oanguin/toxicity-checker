@@ -57,3 +57,10 @@ the opacity can be changed in the following manner.
 <li>0% — 00</li>
 </ul>
 
+## API Documentation
+### [nutritionix](https://developer.nutritionix.com/)
+This API is used to get information related to ingredients. Specifications can be found [here](https://docs.google.com/document/d/1_q-K-ObMTZvO0qUEAxROrN3bwMujwAN25sLHwJzliK0/edit#).
+
+### [food-api-solutions](https://geekflare.com/food-api-solutions/)
+This website shows other related food check APIs which can be used in the future.
+
