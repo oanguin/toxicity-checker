@@ -4,6 +4,17 @@ A new Flutter project used for checking the toxicity of various products.
 ## Local Development
 * Run release version of application locally `flutter run --release`
 
+## Production Builds
+* Run the following command to do a production build/run
+  * `flutter build --dart-define=SOME_VAR=SOME_VALUE --dart-define=OTHER_VAR=OTHER_VALUE`
+  * `flutter run --dart-define=SOME_VAR=SOME_VALUE --dart-define=OTHER_VAR=OTHER_VALUE`
+* These are the required values for a production build/run. Please check LastPassword or some other
+  keystore for these values.
+  * `NUTRITIONIX_APP_ID`
+  * `NUTRITIONIX_APP_KEY`
+  * `NUTRITIONIX_USER_ID`
+  * `NUTRITIONIX_URL`
+
 ## Flutter Documentation
 
 [online documentation](https://flutter.dev/docs), which offers tutorials,
@@ -19,6 +30,8 @@ samples, guidance on mobile development, and a full API reference.
 ## Local Development Issues
 * You may have an issue when you run locally. If you see an error related to `Iproxy` you need to open the `sdk/bin/cache/artifacts/usbmuxd/iproxy`
 file with right click on Mac OSX and allow it permissions.
+## Testing Mocks
+* Generate mocks using `flutter packages pub run build_runner build --delete-conflicting-outputs`
 
 ## Color Scheme
 * [Reference](https://uxdesign.cc/how-the-60-30-10-rule-saved-the-day-934e1ee3fdd8)
