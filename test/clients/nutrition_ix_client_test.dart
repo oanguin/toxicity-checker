@@ -29,7 +29,7 @@ void main() {
   });
 
   test(
-      "Test NutritionIX client retuns null when the client request throws an exception",
+      "Test NutritionIX client does not return null when the client request throws an exception",
       () async {
     final client = MockClient();
     final nutritionIXClient = NutritionIX(client);
@@ -40,11 +40,11 @@ void main() {
     FoodData? foodData =
         await nutritionIXClient.getNutritionData(ingredient: "water");
 
-    expect(foodData, null);
+    expect(foodData, isNot(null));
   });
 
   test(
-      "Test NutritionIX client returns null when status code from client is not 200",
+      "Test NutritionIX client does not return null when status code from client is not 200",
       () async {
     final client = MockClient();
     final nutritionIXClient = NutritionIX(client);
@@ -57,6 +57,6 @@ void main() {
     FoodData? foodData =
         await nutritionIXClient.getNutritionData(ingredient: "water");
 
-    expect(foodData, null);
+    expect(foodData, isNot(null));
   });
 }

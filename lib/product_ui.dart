@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/model/Product.dart';
 import 'package:openfoodfacts/model/ProductResult.dart';
+import 'package:toxicity_checker/utilities/images.dart';
 
+import 'nutrition_ui.dart';
 import 'open_food_client.dart';
 
 class ProductUI {
@@ -55,34 +57,40 @@ class ProductUI {
       padding: const EdgeInsets.symmetric(vertical: 50),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.65,
-        child: Card(
-            key: const Key("product-card"),
-            child: Column(children: <Widget>[
-              ListTile(
-                  tileColor: const Color(0xFF375501),
-                  textColor: const Color(0xFF69FF00),
-                  title: Text('PRODUCT: ${product.productName}')),
-              Row(
-                children: [
-                  showPicture(product.imageFrontSmallUrl ?? ''),
-                  Flexible(
-                      child: Text('INGREDIENTS: ${product.ingredientsText}'))
-                ],
-              )
-            ])),
+        child: GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      NutritionUI(ingredients: product.ingredients))),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          NutritionUI(ingredients: product.ingredients))),
+              child: Card(
+                  key: const Key("product-card"),
+                  child: Column(children: <Widget>[
+                    ListTile(
+                        tileColor: const Color(0xFF375501),
+                        textColor: const Color(0xFF69FF00),
+                        title: Text('PRODUCT: ${product.productName}')),
+                    Row(
+                      children: [
+                        Images.showPicture(product.imageFrontSmallUrl ?? ''),
+                        Flexible(
+                            child:
+                                Text('INGREDIENTS: ${product.ingredientsText}'))
+                      ],
+                    )
+                  ])),
+            ),
+          ),
+        ),
       ),
     ));
-  }
-
-  Widget showPicture(String url) {
-    if (url.isEmpty) {
-      return const Text('Sorry No Image');
-    } else {
-      try {
-        return Image(image: NetworkImage(url));
-      } catch (exception) {
-        return const Text('Sorry No Image');
-      }
-    }
   }
 }

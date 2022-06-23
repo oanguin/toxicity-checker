@@ -1,22 +1,25 @@
 class FoodData {
   late String foodName;
-  late int calories;
-  late int fat;
-  late int saturatedFat;
+  late double calories;
+  late double totalFat;
+  late double saturatedFat;
   late int cholesterol;
   late double sodium;
-  late int carbohydrate;
-  late int dietaryFiber;
-  late int sugars;
-  late int protein;
-  late int potassium;
+  late double carbohydrate;
+  late double dietaryFiber;
+  late double sugars;
+  late double protein;
+  late double potassium;
   late String photoHiRes;
   late String photoThumb;
+
+  //This value is related if the data for the ingredient was found
+  late bool dataFound;
 
   FoodData(
       this.foodName,
       this.calories,
-      this.fat,
+      this.totalFat,
       this.saturatedFat,
       this.cholesterol,
       this.sodium,
@@ -26,5 +29,6 @@ class FoodData {
       this.protein,
       this.potassium,
       this.photoHiRes,
-      this.photoThumb);
+      this.photoThumb,
+      this.dataFound);
 }
