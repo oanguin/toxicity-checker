@@ -18,6 +18,11 @@ class _NutritionUIState extends State<NutritionUI> {
   late final Map<String, FoodData?> foodDataMap = {};
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -86,6 +91,7 @@ class _NutritionUIState extends State<NutritionUI> {
 
   Widget _generateNutritionFactTable(FoodData foodData) {
     return SingleChildScrollView(
+      controller: ScrollController(),
       child: Container(
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.symmetric(vertical: 30),

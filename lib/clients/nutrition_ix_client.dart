@@ -10,15 +10,7 @@ class NutritionIX {
   NutritionIX(this._restClient);
 
   Map<String, String> _headers() {
-    return {
-      "Content-Type": "application/json",
-      "x-app-id": const String.fromEnvironment('NUTRITIONIX_APP_ID',
-          defaultValue: "27c34f98"),
-      "x-app-key": const String.fromEnvironment('NUTRITIONIX_APP_KEY',
-          defaultValue: "eb9f49bcb5a1bd63a9fe2f5402989664"),
-      "x-remote-user-id":
-          const String.fromEnvironment('NUTRITIONIX_USER_ID', defaultValue: "0")
-    };
+    return {"Content-Type": "application/json"};
   }
 
   Future<FoodData?> getNutritionData({required String ingredient}) async {
@@ -29,11 +21,10 @@ class NutritionIX {
 
       var request = Request(
           url: const String.fromEnvironment('NUTRITIONIX_URL',
-              defaultValue:
-                  "https://trackapi.nutritionix.com/v2/natural/nutrients"),
+              defaultValue: "https://nutritionx.acquisition.workers.dev"),
           headers: _headers(),
           method: RequestMethod.post,
-          body: '{"query": "$ingredient"}');
+          body: '{"ingredient": "$ingredient"}');
 
       var response = await _restClient.execute(request: request);
 
