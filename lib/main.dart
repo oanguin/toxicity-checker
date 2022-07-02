@@ -140,7 +140,15 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
                       child: const Text('Scan Barcode')),
                 ),
               ),
-              _productUI.showProduct(_barCode, context),
+              AnimatedCrossFade(
+                crossFadeState: _barCode.isEmpty
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
+                duration: const Duration(seconds: 2),
+                firstChild: _productUI.showProduct(_barCode, context),
+                secondChild: _productUI.showEmptyProductCard(context),
+                secondCurve: Curves.slowMiddle,
+              )
             ])),
           ),
         ),
