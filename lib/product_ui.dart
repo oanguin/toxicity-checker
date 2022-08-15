@@ -50,10 +50,10 @@ class ProductUI {
   Widget showProductCard(Product? product, BuildContext context) {
     return Center(
         child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 50),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.65,
-          height: 300,
+          height: MediaQuery.of(context).size.height * 0.60,
           child: product != null
               ? _showNestedProductCard(product, context)
               : _showNestedEmptyProductCard(context)),
@@ -84,7 +84,7 @@ class ProductUI {
 
   Widget _showNestedEmptyProductCard(BuildContext context) {
     return _generateCard(context,
-        title: 'Welcome to Toxic Ingredient Checker ️',
+        title: 'Welcome to Toxic Ingredient Checker',
         detail:
             'Search for a product by the barcode to view detailed information about the products. Your healthier self will thank you.',
         image: Image.asset("assets/images/healthy.jpeg"),
@@ -114,21 +114,38 @@ class ProductUI {
                 title,
                 textAlign: TextAlign.center,
               )),
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(right: 30, left: 10, top: 10),
-                child: SizedBox(
-                  child: image,
-                  width: 200,
-                  height: 200,
-                ),
-              ),
-              Flexible(
-                  child: Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Text(detail)))
-            ],
+          LayoutBuilder(
+            builder: (BuildContext innerContext, BoxConstraints constraints) {
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.only(right: 2, left: 5, top: 15),
+                    child: SizedBox(
+                      child: image,
+                      width: MediaQuery.of(innerContext).size.width * 0.25,
+                      height: MediaQuery.of(innerContext).size.height * .2,
+                    ),
+                  ),
+                  Expanded(
+                      child: SizedBox(
+                    height: MediaQuery.of(innerContext).size.height * .4,
+                    child: Container(
+                        padding: const EdgeInsets.only(
+                            right: 5, top: 15, bottom: 10),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Text(
+                              detail,
+                              softWrap: true,
+                            ))),
+                  ))
+                ],
+              );
+            },
           )
         ]));
   }
