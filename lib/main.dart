@@ -1,10 +1,19 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:toxicity_checker/open_food_client.dart';
 import 'package:toxicity_checker/product_ui.dart';
 
+import 'ads.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb) {
+    MobileAds.instance.initialize();
+  }
+
   runApp(ToxicityChecker(
     openFoodClient: OpenFoodClient(),
   ));
@@ -85,6 +94,22 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
     });
   }
 
+  adBanner() {
+    if (kIsWeb) return const SizedBox.shrink();
+
+    return SizedBox(
+      width: MediaQuery.of(context).orientation == Orientation.portrait
+          ? MediaQuery.of(context).size.width * 2
+          : MediaQuery.of(context).size.width / 2,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Center(
+          child: SizedBox(height: 50, child: AdsManager()),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +118,7 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
         margin: const EdgeInsets.only(left: 15, right: 15),
         child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 100),
+            padding: const EdgeInsets.symmetric(vertical: 50),
             child: Center(
                 child: Column(children: <Widget>[
               Row(
@@ -148,7 +173,8 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
                 firstChild: _productUI.showProduct(_barCode, context),
                 secondChild: _productUI.showEmptyProductCard(context),
                 secondCurve: Curves.slowMiddle,
-              )
+              ),
+              adBanner()
             ])),
           ),
         ),

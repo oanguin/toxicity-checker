@@ -10,9 +10,10 @@ A new Flutter project used for checking the toxicity of various products.
   * `flutter run --dart-define=SOME_VAR=SOME_VALUE --dart-define=OTHER_VAR=OTHER_VALUE`
 * These are the required values for a production build/run. Please check LastPassword or some other
   keystore for these values.
-  * `NUTRITIONIX_APP_ID`
-  * `NUTRITIONIX_APP_KEY`
-  * `NUTRITIONIX_USER_ID`
+  * `GOOGLE_ADS_MANAGER_UNIT_ID_ANDROID`
+    * Used for Google Ads Manager to load banner ads on Android 
+  * `GOOGLE_ADS_MANAGER_UNIT_ID_IOS`
+    * * Used for Google Ads Manager to load banner ads on IOS 
   * `NUTRITIONIX_URL`
 
 ## Flutter Documentation
