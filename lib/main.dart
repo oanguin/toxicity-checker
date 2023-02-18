@@ -28,6 +28,7 @@ class ToxicityChecker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Toxicity Checker',
       theme: ThemeData(
           textTheme:
@@ -97,15 +98,12 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
   adBanner() {
     if (kIsWeb) return const SizedBox.shrink();
 
-    return SizedBox(
-      width: MediaQuery.of(context).orientation == Orientation.portrait
-          ? MediaQuery.of(context).size.width * 2
-          : MediaQuery.of(context).size.width / 2,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-        child: Center(
-          child: SizedBox(height: 50, child: AdsManager()),
-        ),
+    return Container(
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.only(bottom: 30, top: 10),
+      child: Center(
+        child: SizedBox(height: 50, child: AdsManager()),
       ),
     );
   }
@@ -117,66 +115,62 @@ class _ToxicityMainPageState extends State<ToxicityMainPage> {
       body: Container(
         margin: const EdgeInsets.only(left: 15, right: 15),
         child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: Center(
-                child: Column(children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: TextField(
-                      autofocus: true,
-                      key: const Key("_txtBarCode"),
-                      controller: _txtBarCodeEditingController,
-                      decoration: const InputDecoration(
-                          icon: Icon(Icons.search),
-                          hintText:
-                              'Please enter a barcode to begin your search...',
-                          border: OutlineInputBorder()),
-                      onSubmitted: (String value) async {
-                        setState(() {
-                          _barCode = value;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: IconButton(
-                        key: const Key("clearIcon"),
-                        onPressed: () => {reset()},
-                        tooltip: "Reset product search",
-                        icon: const Icon(Icons.sync_outlined)),
-                  )
-                ],
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: SizedBox(
-                  height: 50,
+          child: Center(
+              child: Column(children: <Widget>[
+            adBanner(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        getBarCode();
-                      },
-                      child: const Text('Scan Barcode')),
+                  child: TextField(
+                    autofocus: true,
+                    key: const Key("_txtBarCode"),
+                    controller: _txtBarCodeEditingController,
+                    decoration: const InputDecoration(
+                        icon: Icon(Icons.search),
+                        hintText:
+                            'Please enter a barcode to begin your search...',
+                        border: OutlineInputBorder()),
+                    onSubmitted: (String value) async {
+                      setState(() {
+                        _barCode = value;
+                      });
+                    },
+                  ),
                 ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: IconButton(
+                      key: const Key("clearIcon"),
+                      onPressed: () => {reset()},
+                      tooltip: "Reset product search",
+                      icon: const Icon(Icons.sync_outlined)),
+                )
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width / 2,
+                child: ElevatedButton(
+                    onPressed: () {
+                      getBarCode();
+                    },
+                    child: const Text('Scan Barcode')),
               ),
-              AnimatedCrossFade(
-                crossFadeState: _barCode.isEmpty
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(seconds: 2),
-                firstChild: _productUI.showProduct(_barCode, context),
-                secondChild: _productUI.showEmptyProductCard(context),
-                secondCurve: Curves.slowMiddle,
-              ),
-              adBanner()
-            ])),
-          ),
+            ),
+            AnimatedCrossFade(
+              crossFadeState: _barCode.isEmpty
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: const Duration(seconds: 2),
+              firstChild: _productUI.showProduct(_barCode, context),
+              secondChild: _productUI.showEmptyProductCard(context),
+              secondCurve: Curves.slowMiddle,
+            )
+          ])),
         ),
       ),
     );

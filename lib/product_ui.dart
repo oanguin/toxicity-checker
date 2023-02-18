@@ -52,8 +52,7 @@ class ProductUI {
         child: Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.65,
-          height: MediaQuery.of(context).size.height * 0.60,
+          width: MediaQuery.of(context).size.width * 0.90,
           child: product != null
               ? _showNestedProductCard(product, context)
               : _showNestedEmptyProductCard(context)),
